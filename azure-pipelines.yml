@@ -10,20 +10,15 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: NodeTool@0
+
+- task: JavaToolInstaller@0
   inputs:
-    versionSpec: '12.16.2'
-  displayName: 'Install Node.js'
-- script: |
-    nvm use 12.16.2
-  displayName: 'nvm use version'
-- task: CopyFilesOverSSHUp@0
-  inputs:
-    sshEndpoint: 'centos test'
-    contents: '**/*.md'
-    targetFolder: '/writable'
-    readyTimeout: '20000'
-    failOnEmptySource: true
+    versionSpec: '8'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'LocalDirectory'
+    jdkFile: 'jdk.zip'
+    jdkDestinationDirectory: '$(Agent.ToolsDirectory)\jdk8'
+    cleanDestinationDirectory: true
 
 - script: |
     npm install
