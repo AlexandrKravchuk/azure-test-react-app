@@ -2,63 +2,12 @@ jobs:
   - job: 'VS2017_Win2016'
     pool: 'Hosted VS2017'
     steps:
-      - task: Bash@3
-        displayName: Create Source Folder
-        inputs:
-          targetType: 'inline'
-          script: 'mkdir -p ./src/javaToolInstaller/JDK'
-          workingDirectory: '$(build.sourcesdirectory)'
-      - task: Bash@3
-        displayName: Download JDK archive
-        inputs:
-          targetType: 'inline'
-          script: 'curl http://akvelon-ssh-test.eastus.cloudapp.azure.com:8044/zulu-7-azure-jdk_7.24.0.2-7.0.191-win_x64.zip --output ./JDK7.zip'
-          workingDirectory: '$(build.sourcesdirectory)/src/javaToolInstaller/JDK'
       - task: JavaToolInstallerPatch0620@0
         displayName: 'Unpack Java, inactive Cleaning'
         inputs:
-          versionSpec: 7
-          jdkArchitectureOption: x64
-          jdkSourceOption: LocalDirectory
-          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-          jdkDestinationDirectory: tempDir/
-          cleanDestinationDirectory: false
-      - task: JavaToolInstallerPatch0620@0
-        displayName: 'Unpack Java, active Cleaning'
-        inputs:
-          versionSpec: 7
-          jdkArchitectureOption: x64
-          jdkSourceOption: LocalDirectory
-          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-          jdkDestinationDirectory: tempDir/
-          cleanDestinationDirectory: true
-      - task: JavaToolInstallerPatch0620@0
-        displayName: 'Unpack Java, active Cleaning'
-        inputs:
-          versionSpec: 7
-          jdkArchitectureOption: x64
-          jdkSourceOption: LocalDirectory
-          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-          jdkDestinationDirectory: tempDir/
-          cleanDestinationDirectory: true
-      - task: JavaToolInstallerPatch0620@0
-        displayName: 'Unpack Java, inactive Cleaning'
-        inputs:
-          versionSpec: 7
-          jdkArchitectureOption: x64
-          jdkSourceOption: LocalDirectory
-          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-          jdkDestinationDirectory: tempDir/
-          cleanDestinationDirectory: false
-      - task: JavaToolInstallerPatch0620@0
-        displayName: 'Unpack Java, inactive Cleaning'
-        inputs:
-          versionSpec: 7
-          jdkArchitectureOption: x64
-          jdkSourceOption: LocalDirectory
-          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-          jdkDestinationDirectory: tempDir/
-          cleanDestinationDirectory: false
+          versionSpec: '8'
+          jdkArchitectureOption: 'x86'
+          jdkSourceOption: 'PreInstalled'
       - task: Maven@3
         displayName: 'Maven JavaTestProject/pom.xml'
         inputs:
