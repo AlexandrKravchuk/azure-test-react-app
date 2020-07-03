@@ -20,7 +20,34 @@ jobs:
           jdkSourceOption: LocalDirectory
           jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
           jdkDestinationDirectory: tempDir/
+          cleanDestinationDirectory: false
+      - task: JavaToolInstallerPatch0620@0
+        displayName: 'Use Java 7'
+        inputs:
+          versionSpec: 7
+          jdkArchitectureOption: x64
+          jdkSourceOption: LocalDirectory
+          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
+          jdkDestinationDirectory: tempDir/
           cleanDestinationDirectory: true
+      - task: JavaToolInstallerPatch0620@0
+        displayName: 'Use Java 7'
+        inputs:
+          versionSpec: 7
+          jdkArchitectureOption: x64
+          jdkSourceOption: LocalDirectory
+          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
+          jdkDestinationDirectory: tempDir/
+          cleanDestinationDirectory: true
+      - task: JavaToolInstallerPatch0620@0
+        displayName: 'Use Java 7'
+        inputs:
+          versionSpec: 7
+          jdkArchitectureOption: x64
+          jdkSourceOption: LocalDirectory
+          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
+          jdkDestinationDirectory: tempDir/
+          cleanDestinationDirectory: false
       - task: JavaToolInstallerPatch0620@0
         displayName: 'Use Java 7'
         inputs:
