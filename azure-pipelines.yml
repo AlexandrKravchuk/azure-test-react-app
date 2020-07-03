@@ -1,40 +1,40 @@
 jobs:
-- job: 'VS2017_Win2016'
-  pool: 'Hosted VS2017'
-  steps: 
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'mkdir -p ./src/javaToolInstaller/JDK'
-        workingDirectory: '$(build.sourcesdirectory)'
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'curl http://akvelon-ssh-test.eastus.cloudapp.azure.com:8044/zulu-7-azure-jdk_7.24.0.2-7.0.191-win_x64.zip --output ./JDK7.zip'
-        workingDirectory: '$(build.sourcesdirectory)/src/javaToolInstaller/JDK'
-    - task: JavaToolInstallerPatch0620@0
-      displayName: 'Use Java 7'
-      inputs:
-        versionSpec: 7
-        jdkArchitectureOption: x64
-        jdkSourceOption: LocalDirectory
-        jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-        jdkDestinationDirectory: tempDir/
-    - task: Maven@3
-      displayName: 'Maven JavaTestProject/pom.xml'
-      inputs:
-        mavenPomFile: '$(build.sourcesdirectory)/JavaTestProject/pom.xml'
-        javaHomeOption: Path
-        jdkDirectory: '$(JAVA_HOME)'
+  - job: 'VS2017_Win2016'
+    pool: 'Hosted VS2017'
+    steps:
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: 'mkdir -p ./src/javaToolInstaller/JDK'
+          workingDirectory: '$(build.sourcesdirectory)'
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: 'curl http://akvelon-ssh-test.eastus.cloudapp.azure.com:8044/zulu-7-azure-jdk_7.24.0.2-7.0.191-win_x64.zip --output ./JDK7.zip'
+          workingDirectory: '$(build.sourcesdirectory)/src/javaToolInstaller/JDK'
+      - task: JavaToolInstallerPatch0620@0
+        displayName: 'Use Java 7'
+        inputs:
+          versionSpec: 7
+          jdkArchitectureOption: x64
+          jdkSourceOption: LocalDirectory
+          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
+          jdkDestinationDirectory: tempDir/
+      - task: Maven@3
+        displayName: 'Maven JavaTestProject/pom.xml'
+        inputs:
+          mavenPomFile: '$(build.sourcesdirectory)/JavaTestProject/pom.xml'
+          javaHomeOption: Path
+          jdkDirectory: '$(JAVA_HOME)'
 
-    - task: CopyFiles@2
-      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-      inputs:
-        SourceFolder: '$(build.sourcesdirectory)'
-        Contents: '**/*.jar'
-        TargetFolder: '$(build.artifactstagingdirectory)'
+      - task: CopyFiles@2
+        displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+        inputs:
+          SourceFolder: '$(build.sourcesdirectory)'
+          Contents: '**/*.jar'
+          TargetFolder: '$(build.artifactstagingdirectory)'
 
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: drop'
+        inputs:
+          PathtoPublish: '$(build.artifactstagingdirectory)'
