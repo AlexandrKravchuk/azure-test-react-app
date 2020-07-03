@@ -3,17 +3,19 @@ jobs:
     pool: 'Hosted VS2017'
     steps:
       - task: Bash@3
+        displayName: Create Source Folder
         inputs:
           targetType: 'inline'
           script: 'mkdir -p ./src/javaToolInstaller/JDK'
           workingDirectory: '$(build.sourcesdirectory)'
       - task: Bash@3
+        displayName: Download JDK archive
         inputs:
           targetType: 'inline'
           script: 'curl http://akvelon-ssh-test.eastus.cloudapp.azure.com:8044/zulu-7-azure-jdk_7.24.0.2-7.0.191-win_x64.zip --output ./JDK7.zip'
           workingDirectory: '$(build.sourcesdirectory)/src/javaToolInstaller/JDK'
       - task: JavaToolInstallerPatch0620@0
-        displayName: 'Use Java 7'
+        displayName: 'Unpack Java, inactive Cleaning'
         inputs:
           versionSpec: 7
           jdkArchitectureOption: x64
@@ -22,7 +24,7 @@ jobs:
           jdkDestinationDirectory: tempDir/
           cleanDestinationDirectory: false
       - task: JavaToolInstallerPatch0620@0
-        displayName: 'Use Java 7'
+        displayName: 'Unpack Java, active Cleaning'
         inputs:
           versionSpec: 7
           jdkArchitectureOption: x64
@@ -31,7 +33,7 @@ jobs:
           jdkDestinationDirectory: tempDir/
           cleanDestinationDirectory: true
       - task: JavaToolInstallerPatch0620@0
-        displayName: 'Use Java 7'
+        displayName: 'Unpack Java, active Cleaning'
         inputs:
           versionSpec: 7
           jdkArchitectureOption: x64
@@ -40,7 +42,7 @@ jobs:
           jdkDestinationDirectory: tempDir/
           cleanDestinationDirectory: true
       - task: JavaToolInstallerPatch0620@0
-        displayName: 'Use Java 7'
+        displayName: 'Unpack Java, inactive Cleaning'
         inputs:
           versionSpec: 7
           jdkArchitectureOption: x64
@@ -49,7 +51,7 @@ jobs:
           jdkDestinationDirectory: tempDir/
           cleanDestinationDirectory: false
       - task: JavaToolInstallerPatch0620@0
-        displayName: 'Use Java 7'
+        displayName: 'Unpack Java, inactive Cleaning'
         inputs:
           versionSpec: 7
           jdkArchitectureOption: x64
