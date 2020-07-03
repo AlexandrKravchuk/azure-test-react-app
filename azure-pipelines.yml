@@ -1,6 +1,7 @@
 jobs:
   - job: 'VS2017_Win2016'
-    pool: 'Hosted VS2017'
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
       - task: JavaToolInstallerPatch0620@0
         displayName: 'Unpack Java, inactive Cleaning'
