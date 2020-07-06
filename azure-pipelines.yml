@@ -24,7 +24,7 @@ jobs:
       - task: CopyFiles@2
         displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
         inputs:
-          SourceFolder: '$(build.sourcesdirectory)/src/javaToolInstaller/'
+          SourceFolder: '$(build.sourcesdirectory)'
           Contents: '**/*.jar'
           TargetFolder: '$(build.artifactstagingdirectory)'
 
