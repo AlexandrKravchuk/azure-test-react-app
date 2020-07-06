@@ -1,7 +1,7 @@
 jobs:
   - job: 'VS2017_Win2016'
     pool: 'Hosted VS2017'
-    steps:
+    steps: 
       - task: Bash@3
         displayName: Create Source Folder
         inputs:
