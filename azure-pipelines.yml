@@ -8,9 +8,9 @@ jobs:
           versionSpec: 7
           jdkArchitectureOption: x64
           jdkSourceOption: AzureStorage
-          azureResourceManagerEndpoint: 'XPLATALM-DevManaged (f233b65d-2603-40d9-8486-18f49ca15e4e)'
-          azureStorageAccountName: kejstorage
-          azureContainerName: 'java-jdk-test-container'
+          azureResourceManagerEndpoint: 'CIX_Eng Connection'
+          azureStorageAccountName: valekrtestaccount
+          azureContainerName: 'test-container'
           azureCommonVirtualFile: 'zulu-7-azure-jdk_7.24.0.2-7.0.191-win_x64.zip'
           jdkDestinationDirectory: /tempAzure
 
