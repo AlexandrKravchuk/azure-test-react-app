@@ -1,75 +1,30 @@
 jobs:
   - job: 'VS2017_Win2016'
     pool: 'Hosted VS2017'
-    steps: 
-      - task: Bash@3
-        displayName: Create Source Folder
-        inputs:
-          targetType: 'inline'
-          script: 'mkdir -p ./src/javaToolInstaller/JDK'
-          workingDirectory: '$(build.sourcesdirectory)'
-      - task: Bash@3
-        displayName: Download JDK archive
-        inputs:
-          targetType: 'inline'
-          script: 'curl http://akvelon-ssh-test.eastus.cloudapp.azure.com:8044/zulu-7-azure-jdk_7.24.0.2-7.0.191-win_x64.zip --output ./JDK7.zip'
-          workingDirectory: '$(build.sourcesdirectory)/src/javaToolInstaller/JDK'
+    steps:
       - task: JavaToolInstallerPatch0620@0
-        displayName: 'Unpack Java, inactive Cleaning'
+        displayName: 'Use Java 1.7'
         inputs:
           versionSpec: 7
           jdkArchitectureOption: x64
-          jdkSourceOption: LocalDirectory
-          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-          jdkDestinationDirectory: tempDir/
-          cleanDestinationDirectory: false
-      - task: JavaToolInstallerPatch0620@0
-        displayName: 'Unpack Java, active Cleaning'
-        inputs:
-          versionSpec: 7
-          jdkArchitectureOption: x64
-          jdkSourceOption: LocalDirectory
-          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-          jdkDestinationDirectory: tempDir/
-          cleanDestinationDirectory: true
-      - task: JavaToolInstallerPatch0620@0
-        displayName: 'Unpack Java, active Cleaning'
-        inputs:
-          versionSpec: 7
-          jdkArchitectureOption: x64
-          jdkSourceOption: LocalDirectory
-          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-          jdkDestinationDirectory: tempDir/
-          cleanDestinationDirectory: true
-      - task: JavaToolInstallerPatch0620@0
-        displayName: 'Unpack Java, inactive Cleaning'
-        inputs:
-          versionSpec: 7
-          jdkArchitectureOption: x64
-          jdkSourceOption: LocalDirectory
-          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-          jdkDestinationDirectory: tempDir/
-          cleanDestinationDirectory: false
-      - task: JavaToolInstallerPatch0620@0
-        displayName: 'Unpack Java, inactive Cleaning'
-        inputs:
-          versionSpec: 7
-          jdkArchitectureOption: x64
-          jdkSourceOption: LocalDirectory
-          jdkFile: './src/javaToolInstaller/JDK/JDK7.zip'
-          jdkDestinationDirectory: tempDir/
-          cleanDestinationDirectory: false
-      - task: Maven@3
+          jdkSourceOption: AzureStorage
+          azureResourceManagerEndpoint: 'XPLATALM-DevManaged (f233b65d-2603-40d9-8486-18f49ca15e4e)'
+          azureStorageAccountName: kejstorage
+          azureContainerName: 'java-jdk-test-container'
+          azureCommonVirtualFile: 'zulu-7-azure-jdk_7.24.0.2-7.0.191-win_x64.zip'
+          jdkDestinationDirectory: /tempAzure
+
+      - task: Maven@1
         displayName: 'Maven JavaTestProject/pom.xml'
         inputs:
-          mavenPomFile: '$(build.sourcesdirectory)/JavaTestProject/pom.xml'
+          mavenPomFile: '$(build.sourcesdirectory)/src/javaToolInstaller/JavaTestProject/pom.xml'
           javaHomeOption: Path
           jdkDirectory: '$(JAVA_HOME)'
 
       - task: CopyFiles@2
         displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
         inputs:
-          SourceFolder: '$(build.sourcesdirectory)'
+          SourceFolder: '$(build.sourcesdirectory)/src/javaToolInstaller/'
           Contents: '**/*.jar'
           TargetFolder: '$(build.artifactstagingdirectory)'
 
